@@ -7,3 +7,5 @@ class Todo:
         self.status = status
         self.createdAt = createdAt
         self.updatedAt = updatedAt
+
+
