@@ -42,7 +42,7 @@ def save_task(tasks):
         json.dump(tasks, file, indent=4) #we write the tasks to the json file with an indentation of 4 for better readability
 
 def update_task(task_id, new_description):
-    tasks = load_task():
+    tasks = load_task()
     for task in tasks:
         if task["id"] == task_id:
             task["description"] = new_description
@@ -85,9 +85,59 @@ def add_task(description):
     print("Task added successfully.")
 
 
+def get_next_id(tasks):
+    return len(tasks) + 1 #we generate a new id for the task by taking the length of the current list of tasks and adding 1 to it
+
+def list_tasks(filter_status=None):
+    tasks = load_task()
+    if filter_status is not None:
+        tasks = [task for task in tasks if task["status"] == filter_status]
+    if not tasks:
+        print("No tasks found.")
+        return
+    for task in tasks:
+        print(f"ID: {task['id']}, Description: {task['description']}, Status: {task['status']}, Created At: {task['createdAt']}, Updated At: {task['updatedAt']}")
+
 #Main function that will be called when the script is run.
 def main():
-    
+    if len(sys.argv) < 2:
+        print("Please provide a command (add, list, delete, update, status).")
+        return
+    command = sys.argv[1]
+    if command == "add":
+        if len(sys.argv)< 3:
+            print("please provide a description for the task.")
+            return
+        add_task(sys.argv[2])
+    elif command == "update":
+        if len(sys.argv) < 4:
+            print("Please provide a task id and a new description for the task.")
+            return
+        update_task(int(sys.argv[2]), sys.argv[3])
+    elif command == "delete":
+        if len(sys.argv) < 3:
+            print("Please provide a task id to delete.")
+            return
+        delete_task(int(sys.argv[2]))
+    elif command == "mark-in-progress":
+        if len(sys.argv) < 3:
+            print("Please provide a task id to mark as in progress.")
+            return
+        change_status(int(sys.argv[2]), "in-progress")
+    elif command == "mark-done":
+        if len(sys.argv) < 3:
+            print("Please provide a task id to mark as done.")
+            return
+        change_status(int(sys.argv[2]), "done")
+    elif command == "list":
+        if len(sys.argv) == 2:
+            list_tasks()
+        else:
+            status = sys.argv[2]
+            list_tasks(status)
+    else:
+        print("Invalid command. Please use add, list, delete, update, mark-in-progress, or mark-done.")
+
 
 
 if __name__ == "__main__":
