@@ -100,32 +100,32 @@ def list_tasks(filter_status=None):
 
 #Main function that will be called when the script is run.
 def main():
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 2:#this ensures that a command is provided when the script is run, otherwise it will print this message and return
         print("Please provide a command (add, list, delete, update, status).")
         return
     command = sys.argv[1]
     if command == "add":
-        if len(sys.argv)< 3:
+        if len(sys.argv)< 3:#this ensures that a description is provided for the task when the add command is used, otherwise it will print this message and return
             print("please provide a description for the task.")
             return
         add_task(sys.argv[2])
     elif command == "update":
-        if len(sys.argv) < 4:
+        if len(sys.argv) < 4:#this ensures that a task id and a new description are provided when the update command is used, otherwise it will print this message and return
             print("Please provide a task id and a new description for the task.")
             return
         update_task(int(sys.argv[2]), sys.argv[3])
     elif command == "delete":
-        if len(sys.argv) < 3:
+        if len(sys.argv) < 3:#this ensures that a task id is provided when the delete command is used, otherwise it will print this message and return
             print("Please provide a task id to delete.")
             return
         delete_task(int(sys.argv[2]))
     elif command == "mark-in-progress":
-        if len(sys.argv) < 3:
+        if len(sys.argv) < 3:#this ensures that a task id is provided when the mark-in-progress command is used, otherwise it will print this message and return
             print("Please provide a task id to mark as in progress.")
             return
         change_status(int(sys.argv[2]), "in-progress")
     elif command == "mark-done":
-        if len(sys.argv) < 3:
+        if len(sys.argv) < 3:#this ensures that a task id is provided when the mark-done command is used, otherwise it will print this message and return
             print("Please provide a task id to mark as done.")
             return
         change_status(int(sys.argv[2]), "done")
